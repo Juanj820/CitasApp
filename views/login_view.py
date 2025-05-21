@@ -9,7 +9,7 @@ class LoginView:
     def __init__(self, root, usuario_controller, on_login_success):
         self.root =root
         self.usuario_controller = usuario_controller
-        self.onlogin_success =on_login_success
+        self.on_login_success = on_login_success
 
         #Configurar tamaño y posicion de la entana login
         self.root.geometry("400x500") #Aumentado el alto para el logo

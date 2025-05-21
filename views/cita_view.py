@@ -64,12 +64,12 @@ class CitaView:
         tabla_height = self.tabla.winfo_reqheight()
         btns_frame.config(height=tabla_height)
 
-        #Botones de accion con menor espacio entre ellos
+        #Botones de acción con menor espacio entre ellos
         tb.Button(btns_frame, text="Nueva Cita", bootstyle="info", command=self.nueva_cita, width=16).pack(pady=6, padx=16)
         tb.Button(btns_frame, text="Editar", bootstyle="warning", command=self.editar_cita, width=16).pack(pady=6, padx=16)
         tb.Button(btns_frame, text="Eliminar", bootstyle="danger", command=self.eliminar_cita, width=16).pack(pady=6, padx=16)
 
-        #Paginacion con botones mas pequeños
+        #Paginación con botones mas pequeños
         pag_frame =tb.Frame(self.frame)
         pag_frame.pack(pady=(20 , 10))
         self.lbl_pagina =tb.Label(pag_frame, text="")
@@ -149,7 +149,7 @@ class CitaView:
             try:
                 self.controller.eliminar(valores[0])
                 self.cargar_tabla()
-                messagebox.showwarning("Exito", "Cita elminidada correctamente.")
+                messagebox.showwarning("Exito", "Cita eliminada correctamente.")
             except Exception as e:
                 messagebox.showerror("Error", f"No se puede eliminar:{e}")
         
