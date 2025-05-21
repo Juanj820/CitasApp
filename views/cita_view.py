@@ -204,7 +204,7 @@ class CitaView:
         tb.Label(form_frame, text="Estado:").grid(row=5, column=0, sticky="e",pady=5,padx=5 )
         estado_cb =tb.Combobox(form_frame, Values=ESTADOS, textvariable=estado, state="readonly", width=28)
         estado_cb.grid(row=5, column=1, pady=5, padx=5)
-       
+
         #Busqueda rapida de pacientes
         def on_paciente_key(event):
             texto = paciente_cb.get().lower()
@@ -212,7 +212,7 @@ class CitaView:
             paciente_cb['values'] = filtrados if filtrados else lista_pacientes_nombres
         paciente_cb.bind('<KeyRelease>', on_paciente_key)
 
-        #Inicializacion de valores
+        #Inicialización de valores
         if valores:
             doctor_id = str(valores.get('id_doctor'))
             paciente_id = str(valores.get('id_paciente'))
@@ -256,7 +256,7 @@ class CitaView:
             paciente_cb.set(lista_pacientes_nombres [0] if lista_pacientes_nombres else "")
             id_paciente.set(lista_pacientes_ids[0] if lista_pacientes_ids else "")
         
-        #Sincronizar seleccion de combobox con variable id
+        #Sincronizar selección de combobox con variable id
         def on_doctor_select(event):
             nombre = doctor_cb.get()
             for did, texto in doctores_dict.items():
@@ -286,7 +286,7 @@ class CitaView:
                 return True
             except ValueError:
                 return False
-               
+            
         def guardar():
             if not id_doctor.get() or not id_paciente.get() or not fecha.get() or not hora.get():
                 messagebox.showwarning("Aviso", "Todos los campos son obligatorios.")
@@ -330,10 +330,10 @@ class CitaView:
         btn_frame.grid(row=6, column=0, columnspan=2, pady=18)
 
         tb.Button(btn_frame, text="Guardar", bootstyle="Success", 
-                  command=guardar, width=12).pack(side="left", padx=8)
+                command=guardar, width=12).pack(side="left", padx=8)
         tb.Button(btn_frame, text="Cancelar", bootstyle="danger", 
-                  command=win.destroy, width=12).pack(side="left", padx=8)
-             
+                command=win.destroy, width=12).pack(side="left", padx=8)
+            
 
 
 

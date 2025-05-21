@@ -30,7 +30,7 @@ class DashboardView:
         total_pacientes = PacienteController().contar()
         total_citas = CitaController().contar()
         totales =[total_doctores, total_pacientes, total_citas]
-        #Creae estilos personalizzados para los totales
+        #Crear estilos personalizados para los totales
 
         style =tb.Style()
         style.configure("TotalDanger.TLabel", background="#dc3545", foreground="white", font=("Arial", 14, "bold"), anchor="center")
@@ -52,7 +52,7 @@ class DashboardView:
             style = tb.Style()
             card_bg =style.lookup(f"{color}.TFrame", "background")
             if not card_bg or card_bg in ("", "SistemButtonFace", None):
-                card_bg ="#dc3545" if color=="danger" else ("#ffc107" if color=="warnig" else "#0dcaf0")
+                card_bg ="#dc3545" if color=="danger" else ("#ffc107" if color=="warning" else "#0dcaf0")
             
             #contenedor principal con padding
             main_frame=tb.Frame(card, style=f"{color}.TFrame")
@@ -127,7 +127,7 @@ class DashboardView:
         #footer
         footer_frame =tb.Frame(self.frame)
         footer_frame.pack(side="bottom", fill=X, pady=10)
-        self.footer_label = tb.Label(footer_frame, text="Sistema de gestion Clinica -Dashboard", style="")
+        self.footer_label = tb.Label(footer_frame, text="Sistema de gestion Clinica - Dashboard", style="")
         self.footer_label.pack(fill="x")
 
     def update_footer(self):
