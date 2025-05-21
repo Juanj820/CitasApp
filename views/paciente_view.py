@@ -10,7 +10,7 @@ SINTOMAS_COMUNES = [
 class PacienteView:
     def __init__(self, parent, controller, usuario_id):
         self.parent = parent
-        self.cotroller = controller
+        self.controller = controller
         self.usuario_id = usuario_id
         self.pagina = 1
         self.por_pagina = 5
@@ -30,74 +30,74 @@ class PacienteView:
         self.busq_entry = tb.Entry(busq_frame, textvariable=self.busqueda)
         self.busq_entry.pack(side="left",padx=5)
         tb.Label(busq_frame,text="Estado:").pack(side="left",padx=5)
-        self.estado_cd = tb.Combobox(busq_frame, values=["",*ESTADOS], textvariable=self.busqueda_estado, width=12, state="readonly")
+        self.estado_cd = tb.Combobox(busq_frame, values=["", *ESTADOS], textvariable=self.busqueda_estado, width=12, state="readonly")
         self.estado_cd.pack(side="left")
-        tb.Button(busq_frame, text="Buscar", botstyle="success", command=self.buscar).pack(side="left", padx=5)
+        tb.Button(busq_frame, text="Buscar", bootstyle="success", command=self.buscar).pack(side="left", padx=5)
         
         # Contenedor principal para tabla y botones
         main_container = tb.Frame(self.frame)
         main_container.pack(fill="both", expand=True, padx=30, pady=5)
         
         # Table con espaciado lateral
-        table_frame = tb.Frame(main_container)
-        table_frame.pack(side="left", fill="both", expand=True,padx=(20, 20))
-        self.table = tb.Treeview(table_frame, columns=("id", "nombre", "sintomas", "direccion", "estado"), show="headings", height=7, bootstyle="info")
-        self.table.heading("id", text="ID")
-        self.table.heading("nombre", text="Nombre")
-        self.table.heading("sintomas", text="Sintomas")
-        self.table.heading("telefono", text="Teléfono")
-        self.table.heading("direccion", text="Dirección")
-        self.table.heading("estado", text="Estado")
-        self.table.column("id", width=40)
-        self.table.column("nombre", width=120)
-        self.table.column("sintomas", width=120)
-        self.table.column("telefono", width=100)
-        self.table.column("direccion", width=140)
-        self.table.column("estado", width=90)
-        self.table.pack(pady=10, fill="x")
+        tabla_frame = tb.Frame(main_container)
+        tabla_frame.pack(side="left", fill="both", expand=True,padx=(20, 20))
+        self.tabla = tb.Treeview(tabla_frame, columns=("id", "nombre", "sintomas", "direccion", "estado"), show="headings", height=7, bootstyle="info")
+        self.tabla.heading("id", text="ID")
+        self.tabla.heading("nombre", text="Nombre")
+        self.tabla.heading("sintomas", text="Sintomas")
+        self.tabla.heading("telefono", text="Teléfono")
+        self.tabla.heading("direccion", text="Dirección")
+        self.tabla.heading("estado", text="Estado")
+        self.tabla.column("id", width=40)
+        self.tabla.column("nombre", width=120)
+        self.tabla.column("sintomas", width=120)
+        self.tabla.column("telefono", width=100)
+        self.tabla.column("direccion", width=140)
+        self.tabla.column("estado", width=90)
+        self.tabla.pack(pady=10, fill="x")
         
+        #LabelFame para botones a la derecha, igualando el alto de la tabla
+        btns_frame = tb.Labelframe(main_container, text="Acciones", bootstyle="info")
+        btns_frame.pack(side="left", fill="y", padx=(10, 0), pady=10, expand=False)
+        btns_frame.update_idletasks()
+        tabla_height = self.tabla.winfo_reqheight()
+        btns_frame.config(height=tabla_height)
         
+        # Botones de accióm con menor espacio entre ellos
+        tb.Button(btns_frame, text="Nuevo Paciente", bootstyle="info", command=self.nuevo_paciente, width=16).pack(pady=6, padx=16)
+        tb.Button(btns_frame, text="Editar", bootstyle="warning", command=self.editar_paciente, width=16).pack(pady=6, padx=16)
+        tb.Button(btns_frame, text="Eliminar", bootstyle="danger", command=self.eliminar_paciente, width=16).pack(pady=6, padx=16)
         
+        # Paginación con botones más paqueños
+        pag_frame = tb.Frame(self.frame)
+        pag_frame.pack(pady=(20, 10))
+        self.lbl_pagina = tb.Label(pag_frame, text="")
+        self.lbl_pagina.pack(side="left", padx=5)
+        tb.Button(pag_frame, text="Anterior", bootstyle="secondary", command=self.pagina_anterior, width=8).pack(side="left", padx=5)
+        tb.Button(pag_frame, text="Siguiente", bootstyle="secondary", command=self.pagina_siguiente, width=8).pack(side="left", padx=5)
+        self.lbl_total = tb.Label(pag_frame, text="")
+        self.lbl_total.pack(side="left", padx=15)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        self.cargar_tabla ()
+    
+    def buscar(self):
+        self.pagina = 1
+        self.cargar_tabla()
+    
+    def cargar_tabla(self):
+        for row in self.tabla.get_children():
+            self.tabla.delete(row)
+        busq = self.busqueda.get()
+        estado = self.busqueda_estado.get()
+        pacientes = self.controller.listar(busq, estado, self.pagina, self.por_pagina)
+        for pac in pacientes:
+            self.tabla.insert("","end", values=(pac["id"], pac["nombre"], pac["sintomas"], pac["telefono"], pac["direccion"], pac["estado"]))
+        #Calcular total de páginas y registros
+        total = self.controller.contar(busq, estado)
+        self.total_registros = total
+        self.total_paginas = max(1, (total + self.por_pagina -1) // self.por_pagina)
+        self.lbl_pagina.config(text=f"Página {self.pagina} de {self.total_pagina}")
+        self.lbl_total.config(text=f"Total registros: {self.total_registros}")
         
     def pagina_anterior(self):
         if self.pagina > 1:
@@ -204,8 +204,3 @@ class PacienteView:
                     command=guardar, width=12).pack(side="left", padx=8)
             tb.Button(btn_frame, text="Cancelar", bootstyle="danger",
                     command=win.destroy, width=12).pack(side="left", padx=8)
-            
-                    
-                    
-        
-                
