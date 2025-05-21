@@ -7,7 +7,7 @@ class PacienteController:
     def listar(self, busqueda='', estado='', pagina=1, por_pagina=10):
         cursor = self.conn.cursor(dictionary=True)
         offset = (pagina - 1) * por_pagina
-        query = "SELECT * FROM pacientes WHERE LIKE %s"
+        query = "SELECT * FROM pacientes WHERE nombre LIKE %s"
         params = [f"%{busqueda}%"]
         if estado:
             query += " AND estado = %s"

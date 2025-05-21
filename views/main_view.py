@@ -115,7 +115,7 @@ class MainView:
     def show_dashboard(self):
         for widget in self.content.winfo_children():
             widget.destroy()
-        from views.dashboard_view import DashboardView
+        from views.dashboard import DashboardView
         DashboardView(self.content)
 
     def show_doctores(self):
