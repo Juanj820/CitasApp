@@ -26,9 +26,9 @@ class DashboardView:
         iconos =["","",""]
         titulos=["Total Doctores", "Total Pacientes", "Total Citas"]
         #Obtener datos
-        total_doctores=DoctorController().contar()
-        total_pacientes=PacienteController().contar()
-        total_citas=CitaController().contar()
+        total_doctores = DoctorController().contar()
+        total_pacientes = PacienteController().contar()
+        total_citas = CitaController().contar()
         totales =[total_doctores, total_pacientes, total_citas]
         #Creae estilos personalizzados para los totales
 

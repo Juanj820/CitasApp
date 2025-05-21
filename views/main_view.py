@@ -47,7 +47,7 @@ class MainView:
         self.sidebar = tb.Frame(self.frame, width=200, bootstyle="primary")
         self.sidebar.pack(side="left", fill="y")
         #foto de perfil en el sindebar
-        foto_path = usuario.get ('foto') or ''
+        foto_path = usuario.get('foto') or ''
         def make_circle(img_path, size=(80,80)):
             try:
                 img = Image.open(img_path).resize(size,Image.LANCZOS).convert("RGBA")
@@ -63,9 +63,9 @@ class MainView:
             except:
                 return None
         self.sidebar_foto = make_circle(foto_path) if foto_path else None
-        self.sidebar_foto_label = tb.Label(self.sidebar, image=self.sidebar_foto, style="inverse.primary.Tlabel")
+        self.sidebar_foto_label = tb.Label(self.sidebar, image=self.sidebar_foto, style="inverse.primary.TLabel")
         self.sidebar_foto_label.pack(pady=(20,5))
-        tb.Label(self.sidebar, text=f"{usuario['nombre']}", font=("Arial", 10, "bold"), style="inverse.primary.Tlabel").pack(pady=10)
+        tb.Label(self.sidebar, text=f"{usuario['nombre']}", font=("Arial", 10, "bold"), style="inverse.primary.TLabel").pack(pady=10)
         #Linea sepadora tipo hr
         tk.Frame(self.sidebar, height=2, bg="#e0e0e0", relief="flat").pack(fill="x", padx=16, pady=(0,10))
         # --- OPCIÓN 1: Menu con frames y labels alineados a la izquierda, simulando botones ---
@@ -75,7 +75,7 @@ class MainView:
             lbl = tk.Label(f, text=f"{icono} {texto}", font=("Arial", 10), bg='#2563eb', fg='white', anchor="w", padx=8)
             lbl.pack(fill="x") 
             def on_enter(e):
-                lbl.config(bg="#1e40af", fg="ffffff")
+                lbl.config(bg="#1e40af", fg="#ffffff")
             def on_leave(e):
                 lbl.config(bg="#2563eb")
             def on_click(e):
@@ -156,7 +156,7 @@ class MainView:
             #Forzar el reinicio de la aplicación
             self.on_logout()
 
-    def update_footer (self):
+    def update_footer(self):
         try:
             now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             self.footer_left.config(text=f"Usuario: {self.usuario['nombre']}")
@@ -178,7 +178,7 @@ class MainView:
         win.geometry("350x500")
         win.resizable(False, False)
         #Foto de perfil
-        foto_path = user.get ('foto') or ''
+        foto_path = user.get('foto') or ''
         img_frame = tk.Frame(win)
         img_frame.pack(pady=(10,0))
         def cargar_img(path):

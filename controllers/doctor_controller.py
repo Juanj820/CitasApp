@@ -19,7 +19,7 @@ class DoctorController:
     
     def contar(self, busqueda='', estado=''):
         cursor = self.conn.cursor()
-        query = "SELECT COUNT (*) FROM dortores WHERE (nombre LIKE %s OR departamento LIKE %s)"
+        query = "SELECT COUNT(*) FROM doctores WHERE (nombre LIKE %s OR departamento LIKE %s)"
         params = [f"%{busqueda}%", f"%{busqueda}%"]
         if estado:
             query += " AND estado = %s"

@@ -41,7 +41,7 @@ class PacienteView:
         # Table con espaciado lateral
         tabla_frame = tb.Frame(main_container)
         tabla_frame.pack(side="left", fill="both", expand=True,padx=(20, 20))
-        self.tabla = tb.Treeview(tabla_frame, columns=("id", "nombre", "sintomas", "direccion", "estado"), show="headings", height=7, bootstyle="info")
+        self.tabla = tb.Treeview(tabla_frame, columns=("id", "nombre", "sintomas", "telefono", "direccion", "estado"), show="headings", height=7, bootstyle="info")
         self.tabla.heading("id", text="ID")
         self.tabla.heading("nombre", text="Nombre")
         self.tabla.heading("sintomas", text="Sintomas")
