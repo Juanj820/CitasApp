@@ -12,7 +12,7 @@ class DoctorController:
         if estado:
             query += " AND estado = %s"
             params.append(estado)
-        query += "LIMIT %s OFFSET %s"
+        query += " LIMIT %s OFFSET %s"
         params.extend([por_pagina, offset])
         cursor.execute(query, tuple(params))
         return cursor.fetchall()
