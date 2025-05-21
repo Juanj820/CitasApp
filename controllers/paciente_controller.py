@@ -1,4 +1,4 @@
-for database.db import get_connection
+from database.db import get_connection
 
 class PacienteController:
     def __init__(self):
