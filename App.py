@@ -17,7 +17,7 @@ class App:
             self.usuario_controller,
             self.on_login_success
         )
-    def on_login_succes(self, user):
+    def on_login_success(self, user):
         #crear y mostrar la vista principal
         self.main_view = MainView(
             self.root,
