@@ -19,7 +19,7 @@ class CitaController:
         if estado:
             query += " AND c.estado = %s"
             params.append(estado)
-        query += "ORDER BY c.fecha DESC LIMIT %s OFFSET %s"
+        query += " ORDER BY c.fecha DESC LIMIT %s OFFSET %s"
         params.extend([por_pagina, offset])
         cursor.execute(query, tuple(params))
         return cursor.fetchall()
