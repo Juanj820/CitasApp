@@ -10,7 +10,7 @@ class UsuarioController:
         cursor.execute(query,(usuario, password))
         return cursor.fetchone()
     
-    def actulizar(self, id, nombre, usuario, password=None, foto=None):
+    def actualizar(self, id, nombre, usuario, password=None, foto=None):
         cursor = self.conn.cursor()
         if password and foto:
             query = "UPDATE usuarios SET nombre=%s, usuario=%s, password=%s, foto=%s, actualizado_en=NOW() WHERE id=%s"

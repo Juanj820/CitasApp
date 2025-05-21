@@ -6,7 +6,7 @@ import os
 from PIL import Image, ImageTk, ImageDraw
 import shutil
 
-class MainView(tb.Frame):
+class MainView:
     def __init__(self, root, usuario, on_logout):
         self.root = root
         self.usuario = usuario
@@ -36,7 +36,7 @@ class MainView(tb.Frame):
         self.user_menu.add_command(label="Configuración", command=self.show_settings)
         self.user_menu.add_separator()
         self.user_menu.add_command(label="Cerrar Sesión", command=self.logout)
-        self.user_menu_btn["menu"] = self.user_menu
+        self.user_menu_btn['menu'] = self.user_menu
         self.user_menu_btn.pack(side="right", padx=20, pady=4)
 
         # FRAME PRINCIPAL (sidebar y contenido )
@@ -72,7 +72,7 @@ class MainView(tb.Frame):
         def crear_menu_sidebar(parent, icono, texto, comando):
             f = tk.Frame(parent, bg='#2563eb')
             f.pack(fill="x", padx=16, pady=2)
-            lbl = tb.Label(f, text=f"{icono} {texto}", font=("Arial", 10), bg='#2563eb', fg='white', anchor="w", padx=8)
+            lbl = tk.Label(f, text=f"{icono} {texto}", font=("Arial", 10), bg='#2563eb', fg='white', anchor="w", padx=8)
             lbl.pack(fill="x") 
             def on_enter(e):
                 lbl.config(bg="#1e40af", fg="ffffff")
@@ -112,60 +112,60 @@ class MainView(tb.Frame):
         self.footer_right.pack(side="left", fill="x", expand=True, padx=(0,20), pady=8) 
         self.update_footer()
 
-def show_dashboard(self):
-    for widget in self.content.winfo_children():
-        widget.destroy()
-    from views.dashboard_view import DashboardView
-    DashboardView(self.content)
+    def show_dashboard(self):
+        for widget in self.content.winfo_children():
+            widget.destroy()
+        from views.dashboard_view import DashboardView
+        DashboardView(self.content)
 
-def show_doctores(self):
-    for widget in self.content.winfo_children():
-        widget.destroy()
-    from controllers.doctor_controller import DoctorController
-    from views.doctor_view import DoctorView
-    DoctorView(self.content, DoctorController(), self.usuario['id'])
+    def show_doctores(self):
+        for widget in self.content.winfo_children():
+            widget.destroy()
+        from controllers.doctor_controller import DoctorController
+        from views.doctor_view import DoctorView
+        DoctorView(self.content, DoctorController(), self.usuario['id'])
 
-def show_pacientes(self):
-    for widget in self.content.winfo_children():
-        widget.destroy()
-    from controllers.paciente_controller import PacienteController
-    from views.paciente_view import PacienteView
-    PacienteView(self.content, PacienteController(), self.usuario['id'])
+    def show_pacientes(self):
+        for widget in self.content.winfo_children():
+            widget.destroy()
+        from controllers.paciente_controller import PacienteController
+        from views.paciente_view import PacienteView
+        PacienteView(self.content, PacienteController(), self.usuario['id'])
 
-def show_citas(self):
-    for widget in self.content.winfo_children():
-        widget.destroy()
-    from controllers.cita_controller import CitaController
-    from views.cita_view import CitaView
-    CitaView(self.content, CitaController(), self.usuario['id'])
+    def show_citas(self):
+        for widget in self.content.winfo_children():
+            widget.destroy()
+        from controllers.cita_controller import CitaController
+        from views.cita_view import CitaView
+        CitaView(self.content, CitaController(), self.usuario['id'])
 
-def logout(self):
-    try:
-        messagebox.showinfo("Hasta pronto", f"Hasta pronto, {self.usuario['nombre']}")
-        #Destruir todos los widgests antes de cerrar sesion
-        if hasattr(self, 'footer'):
-            self.footer.destroy()
-        if hasattr(self, 'frame'):
-            self.frame.destroy()
-        if hasattr(self, 'navbar'):
-            self.navbar.destroy()
-        #llamar a on_logout que reiniciara la aplicación
-        self.on_logout()
-    except Exception as e:
-        print(f"Error al cerrar sesión: {e}")
-        #Forzar el reinicio de la aplicación
-        self.on_logout()
+    def logout(self):
+        try:
+            messagebox.showinfo("Hasta pronto", f"Hasta pronto, {self.usuario['nombre']}")
+            #Destruir todos los widgests antes de cerrar sesion
+            if hasattr(self, 'footer'):
+                self.footer.destroy()
+            if hasattr(self, 'frame'):
+                self.frame.destroy()
+            if hasattr(self, 'navbar'):
+                self.navbar.destroy()
+            #llamar a on_logout que reiniciara la aplicación
+            self.on_logout()
+        except Exception as e:
+            print(f"Error al cerrar sesión: {e}")
+            #Forzar el reinicio de la aplicación
+            self.on_logout()
 
-def update_footer (self):
-    try:
-        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        self.footer_left.config(text=f"Usuario: {self.usuario['nombre']}")
-        self.footer_center.config(text="© 2025 Soluciones Tecnológicas")
-        self.footer_right.config(text=f"{now}")
-        self.root.after(1000, self.update_footer)
-    except:
-        # Si la ventana se ha destruido, no hacemos nada 
-        pass
+    def update_footer (self):
+        try:
+            now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            self.footer_left.config(text=f"Usuario: {self.usuario['nombre']}")
+            self.footer_center.config(text="© 2025 Soluciones Tecnológicas")
+            self.footer_right.config(text=f"{now}")
+            self.root.after(1000, self.update_footer)
+        except:
+            # Si la ventana se ha destruido, no hacemos nada 
+            pass
 
     def show_profile(self):
         messagebox.showinfo("Mi Perfil", f"Usuario: {self.usuario['nombre']}")

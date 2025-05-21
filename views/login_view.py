@@ -19,8 +19,8 @@ class LoginView:
         self.root.update_idletasks()
         width = self.root.winfo_width()
         height = self.root.winfo_height()
-        x = (self.root.winfo_screenwidth()//2) - (width//2)
-        y=(self.root.winfo_screenheight()//2) - (height//2)
+        x = (self.root.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.root.winfo_screenheight() // 2) - (height // 2)
         self.root.geometry(f'{width}x{height}+{x}+{y}')
 
         #Frame principal con padding 
@@ -44,7 +44,7 @@ class LoginView:
             logo_img = logo_img.resize((width, height), Image.Resampling.LANCZOS)
 
             #Convertir a photoImage
-            self.logo_photo = ImageTk.photoImage(logo_img)
+            self.logo_photo = ImageTk.PhotoImage(logo_img)
 
             #mostrar el logo
             logo_label = tb.Label(self.frame, image=self.logo_photo)
@@ -74,16 +74,16 @@ class LoginView:
 
     def centrar_ventana(self):
         #Actualizar la ventana para obtener las dimensiones correctas
-        self.root.update.idletask()
+        self.root.update_idletasks()
         #Obtener dimensiones de la ventana
-        Width = self.root.winfo_width()
+        width = self.root.winfo_width()
         height = self.root.winfo_height()
         #Calcular posicion x, y para centrar
-        x=(self.root.winfo_screenwidth()//2)-(Width//2)
+        x=(self.root.winfo_screenwidth()//2)-(width//2)
         #Ajustar la posicion vertical para que el footer sea visible
         y=(self.root.winfo_screenheight()//2)-(height//2)-50
         #Centrar la ventana
-        self.root.geometry(f'{Width}x{height}+{x}+{y}')
+        self.root.geometry(f'{width}x{height}+{x}+{y}')
     
     def login(self):
         usuario = self.usuario_entry.get()
@@ -99,7 +99,7 @@ class LoginView:
             self.centrar_ventana()
             #Mostrar mensaje de bienvenida y continuar
             messagebox.showinfo("Bienvenido", f"Bienvenido {user['nombre']} al sistema.")
-            self.on_login_success(user)
+            self.onlogin_success(user)
         else:
             messagebox.showerror("Error", "Usuario o contraseña incorrectos")
             self.usuario_entry.delete(0, 'end')
