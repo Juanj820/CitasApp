@@ -99,7 +99,7 @@ class LoginView:
             self.centrar_ventana()
             #Mostrar mensaje de bienvenida y continuar
             messagebox.showinfo("Bienvenido", f"Bienvenido {user['nombre']} al sistema.")
-            self.onlogin_success(user)
+            self.on_login_success(user)
         else:
             messagebox.showerror("Error", "Usuario o contraseña incorrectos")
             self.usuario_entry.delete(0, 'end')

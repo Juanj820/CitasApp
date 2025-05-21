@@ -14,7 +14,7 @@ class CitaView:
         self.pagina = 1
         self.por_pagina = 5
         self.busqueda = StringVar()
-        self.busqueda_estado =StringVar(value="")
+        self.busqueda_estado = StringVar(value="")
         self.total_paginas = 1
         self.total_registros = 0
 
@@ -29,7 +29,7 @@ class CitaView:
         self.busq_entry = tb.Entry(busq_frame, textvariable=self.busqueda)
         self.busq_entry.pack(side="left", padx=5)
         tb.Label(busq_frame, text ="Estado:").pack(side="left", padx=5)
-        self.estado_cb = tb.Combobox(busq_frame, value=["",*ESTADOS], textvariable=self.busqueda_estado, width=14, state="readonly")
+        self.estado_cb = tb.Combobox(busq_frame, value=["", *ESTADOS], textvariable=self.busqueda_estado, width=14, state="readonly")
         self.estado_cb.pack(side="left")
         tb.Button(busq_frame, text="Buscar", bootstyle="success", command=self.buscar).pack(side="left", padx=5)
 
@@ -69,16 +69,18 @@ class CitaView:
         tb.Button(btns_frame, text="Editar", bootstyle="warning", command=self.editar_cita, width=16).pack(pady=6, padx=16)
         tb.Button(btns_frame, text="Eliminar", bootstyle="danger", command=self.eliminar_cita, width=16).pack(pady=6, padx=16)
 
+        #Paginacion con botones mas pequeños
         pag_frame =tb.Frame(self.frame)
-        pag_frame.pack(20 , 10)
+        pag_frame.pack(pady=(20 , 10))
         self.lbl_pagina =tb.Label(pag_frame, text="")
         self.lbl_pagina.pack(side="left", padx=5)
-        tb.Button(pag_frame, text="Anterior", bootstyle="secondary", command=self.pagina_anterior, width=16).pack(side="left", padx= 5)
-        tb.Button(pag_frame, text="Siguiente", bootstyle="secondary", command=self.pagina_siguiente, width=16).pack(side="left", padx= 5)
-        self.lbl_total=tb.label(pag_frame, text="")
+        tb.Button(pag_frame, text="Anterior", bootstyle="secondary", command=self.pagina_anterior, width=8).pack(side="left", padx= 5)
+        tb.Button(pag_frame, text="Siguiente", bootstyle="secondary", command=self.pagina_siguiente, width=8).pack(side="left", padx= 5)
+        self.lbl_total=tb.Label(pag_frame, text="")
         self.lbl_total.pack(side="left", padx=15)
 
         self.cargar_tabla()
+
     def buscar(self):
         self.pagina = 1
         self.cargar_tabla()
@@ -99,33 +101,32 @@ class CitaView:
                 cita["fecha"],
                 cita["estado"],
             ))
-#Calcular total de paginas y registros
+        #Calcular total de paginas y registros
         total= self.controller.contar(busq, estado)
-        self.total_registros =total
-        self.total_paginas = max(1, (total + self.por_pagina -1)//self.por_pagina)
-        self.lbl_pagina.config(text=f"pagina{self.pagina} de {self.total_paginas}")
+        self.total_registros = total
+        self.total_paginas = max(1, (total + self.por_pagina - 1) // self.por_pagina)
+        self.lbl_pagina.config(text=f"pagina {self.pagina} de {self.total_paginas}")
         self.lbl_total.config(text=f"Total registros: {self.total_registros}")
 
     def pagina_anterior(self):
         if self.pagina > 1:
-            self.pagina -=1
+            self.pagina -= 1
             self.cargar_tabla()
             
-
     def pagina_siguiente(self):            
         if self.pagina < self.total_paginas:
-            self.pagina +=1
+            self.pagina += 1
             self.cargar_tabla()
 
     def nueva_cita(self):
         self.formulario_cita()
 
     def editar_cita(self):
-        seleccionado =self.tabla.selection()
+        seleccionado = self.tabla.selection()
         if not seleccionado:
             messagebox.showwarning("Aviso", "Seleccione una cita para editar.")
             return
-        valores =self.tabla.item(seleccionado[0], "values")
+        valores = self.tabla.item(seleccionado[0], "values")
         #Convertir a diccionario para compatibilidad con el formulario
         valores_dict = {
             'id': valores[0],
@@ -150,7 +151,7 @@ class CitaView:
                 self.cargar_tabla()
                 messagebox.showwarning("Exito", "Cita elminidada correctamente.")
             except Exception as e:
-                messagebox.showwarning("Error", f"No se puede eliminar:{e}")
+                messagebox.showerror("Error", f"No se puede eliminar:{e}")
         
     def formulario_cita(self, valores=None):
         win=tb.Toplevel(self.frame)
@@ -161,33 +162,33 @@ class CitaView:
         form_frame =tb.Frame(win, padding =20)
         form_frame.pack(fill="both", expand=True)
 
-        tb.Label(form_frame, text="Por favor ingrese la informacion de la cita", font=("Aral", 11)).grid(row=0, column=0, columnspan=2, pady=(0,15))
+        tb.Label(form_frame, text="Por favor ingrese la informacion de la cita", 
+                font=("Aral", 11)).grid(row=0, column=0, columnspan=2, pady=(0,15))
+        
         #Crear diccionario para mapear id a texto
-
         doctores = DoctorController().listar(por_pagina=1000)
         pacientes = PacienteController().listar(por_pagina=1000)
         doctores_dict = {str(d['id']): f"{d['nombre']} ({d['departamento']})" for d in doctores}
-        pacientes_dict = {str(p['id']): f"{p['nombre']}" for p in pacientes}     
-        listar_doctores_nombres = [f"{d['nombre']} ({d['departamento']})" for d in doctores]    
-        listar_pacientes_nombres = [f"{p['nombre']}" for p in pacientes]
-        listar_doctores_ids = [str(d['id']) for d in doctores]
-        listar_pacientes_ids =[str(p['id']) for p in pacientes]
+        pacientes_dict = {str(p['id']): p['nombre'] for p in pacientes}     
+        lista_doctores_nombres = [f"{d['nombre']} ({d['departamento']})" for d in doctores]    
+        lista_pacientes_nombres = [p['nombre'] for p in pacientes]
+        lista_doctores_ids = [str(d['id']) for d in doctores]
+        lista_pacientes_ids = [str(p['id']) for p in pacientes]
 
         #Variables
         id_doctor = StringVar()
-        id_paciente=StringVar()
+        id_paciente = StringVar()
         fecha = StringVar(value=datetime.date.today().Strftime("%Y-%m-%d"))
         hora = StringVar(value="08:00:00")
-        estado=StringVar(value=ESTADOS[0])
+        estado = StringVar(value=ESTADOS[0])
 
         #Campos del formulario con grid layout
-
         tb.Label(form_frame, text="Doctor:").grid(row=1, column=0, sticky="e", pady=5, padx=5 )
-        doctor_cb =tb.Combobox(form_frame, Values=listar_doctores_nombres, state="readonly", width=28)
+        doctor_cb = tb.Combobox(form_frame, Values=lista_doctores_nombres, state="readonly", width=28)
         doctor_cb.grid(row=1, column=1, pady=5, padx=5)
 
         tb.Label(form_frame, text="Paciente:").grid(row=2, column=0, sticky="e",pady=5,padx=5 )
-        paciente_cb= tb.Combobox(form_frame, Values=listar_pacientes_nombres, state="readonly", width=28)
+        paciente_cb= tb.Combobox(form_frame, Values=lista_pacientes_nombres, state="readonly", width=28)
         paciente_cb.grid(row=2, column=1, pady=5, padx=5)
         
         tb.Label(form_frame, text="Fecha:").grid(row=3, column=0, sticky="e",pady=5,padx=5 )
@@ -198,7 +199,7 @@ class CitaView:
         tb.Label(form_frame, text="Hora:").grid(row=4, column=0, sticky="e",pady=5,padx=5 )
         hora_entry =tb.Entry(form_frame, textvariable=hora, width=28)
         hora_entry.grid(row=4, column=1, pady=5, padx=5)
-        tb.Label(form_frame, text="(HH-MM-SS)").grid(row=4, column=2,sticky="w", pady=5, padx=5)
+        tb.Label(form_frame, text="(HH:MM:SS)").grid(row=4, column=2,sticky="w", pady=5, padx=5)
 
         tb.Label(form_frame, text="Estado:").grid(row=5, column=0, sticky="e",pady=5,padx=5 )
         estado_cb =tb.Combobox(form_frame, Values=ESTADOS, textvariable=estado, state="readonly", width=28)
@@ -208,34 +209,32 @@ class CitaView:
         def on_paciente_key(event):
             texto = paciente_cb.get().lower()
             filtrados =[p['nombre'] for p in pacientes if texto in p['nombre'].lower()]
-            paciente_cb['values'] = filtrados if filtrados else listar_pacientes_nombres
+            paciente_cb['values'] = filtrados if filtrados else lista_pacientes_nombres
         paciente_cb.bind('<KeyRelease>', on_paciente_key)
 
         #Inicializacion de valores
-
         if valores:
             doctor_id = str(valores.get('id_doctor'))
-            paciente_id =str(valores.get('id_paciente'))
-             #Seleccionar doctor por ID
+            paciente_id = str(valores.get('id_paciente'))
+            #Seleccionar doctor por ID
             if doctor_id in doctores_dict:
                 doctor_cb.set(doctores_dict[doctor_id])
                 id_doctor.set(doctor_id)
             else:
-                doctor_cb.set(listar_doctores_nombres[0] if listar_doctores_nombres else "")
-                id_doctor.set(listar_doctores_ids[0] if listar_pacientes_ids else "")
-            
+                doctor_cb.set(lista_doctores_nombres[0] if lista_doctores_nombres else "")
+                id_doctor.set(lista_doctores_ids[0] if lista_pacientes_ids else "")
             #Seleccionar paciente por ID
             if paciente_id in pacientes_dict:
                 paciente_cb.set(pacientes_dict[paciente_id])
                 id_paciente.set(doctor_id)
             else:
-                paciente_cb.set(listar_pacientes_nombres[0] if listar_pacientes_nombres else "")
-                id_paciente.set(listar_pacientes_ids[0] if listar_pacientes_ids else "") 
+                paciente_cb.set(lista_pacientes_nombres[0] if lista_pacientes_nombres else "")
+                id_paciente.set(lista_pacientes_ids[0] if lista_pacientes_ids else "") 
             #Fecha y hora
-            fecha_valor= valores.get('fecha', '') 
+            fecha_valor = valores.get('fecha', '') 
             if fecha_valor:
                 try:
-                    partes=fecha_valor.split('')
+                    partes = fecha_valor.split('')
                     if len(partes) >= 2:
                         fecha.set(partes[0])
                         hora.set(partes[1])
@@ -243,7 +242,7 @@ class CitaView:
                         fecha .set(datetime.date.today().strftime("%Y-%m-%d"))
                         hora.set("08:00:00") 
                 except:
-                    fecha .set(datetime.date.today().strftime("%Y-%m-%d"))
+                    fecha.set(datetime.date.today().strftime("%Y-%m-%d"))
                     hora.set("08:00:00")  
             #Estado
             estado_valor = valores.get('estado', '')
@@ -252,10 +251,10 @@ class CitaView:
             else:
                 estado.set(ESTADOS[0])
         else:
-            doctor_cb.set(listar_doctores_nombres [0] if listar_doctores_nombres else "")
-            id_doctor.set(listar_doctores_ids[0] if listar_doctores_ids else "")
-            paciente_cb.set(listar_pacientes_nombres [0] if listar_pacientes_nombres else "")
-            id_paciente.set(listar_pacientes_ids[0] if listar_pacientes_ids else "")
+            doctor_cb.set(lista_doctores_nombres [0] if lista_doctores_nombres else "")
+            id_doctor.set(lista_doctores_ids[0] if lista_doctores_ids else "")
+            paciente_cb.set(lista_pacientes_nombres [0] if lista_pacientes_nombres else "")
+            id_paciente.set(lista_pacientes_ids[0] if lista_pacientes_ids else "")
         
         #Sincronizar seleccion de combobox con variable id
         def on_doctor_select(event):
@@ -276,10 +275,11 @@ class CitaView:
 
         def validar_fecha(fecha_str):
             try:
-                datetime.datetime.strftime(fecha_str, "%Y:%m:%d")
+                datetime.datetime.strftime(fecha_str, "%Y-%m-%d")
                 return True
             except ValueError:
                 return False
+            
         def validar_hora(hora_str):
             try:
                 datetime.datetime.strftime(hora_str, "%H:%M:%S")
@@ -291,12 +291,15 @@ class CitaView:
             if not id_doctor.get() or not id_paciente.get() or not fecha.get() or not hora.get():
                 messagebox.showwarning("Aviso", "Todos los campos son obligatorios.")
                 return
+            
             if not validar_fecha(fecha.get()):
                 messagebox.showwarning("Aviso", "Formato de fecha invalido. use YYYY-MM-DD")
                 return
+            
             if not validar_hora(hora.get()):
                 messagebox.showwarning("Aviso", "Formato de hora invalido. use HH:MM:SS")
                 return
+            
             try:
                 fecha_hora = f"{fecha.get()} {hora.get()}"
                 if valores:
@@ -313,9 +316,10 @@ class CitaView:
                         id_doctor.get(),
                         id_paciente.get(),
                         fecha_hora,
-                        estado.get()
+                        estado.get(),
+                        self.usuario_id
                     )
-                    messagebox.showwarning("Exito", "Cita creada correctamente.")
+                    messagebox.showinfo("Exito", "Cita creada correctamente.")
                 win.destroy()
                 self.cargar_tabla()
             except Exception as e:
