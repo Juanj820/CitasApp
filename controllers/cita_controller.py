@@ -1,4 +1,4 @@
-for database.db import get_connection
+from database.db import get_connection
 
 class CitaController:
     def __init__(self):
@@ -30,7 +30,7 @@ class CitaController:
             SELECT COUNT(*)
             FROM citas c
             JOIN doctores d ON c.id_doctor = d.id
-            JOIN pacientesn p ON c.id_paciente = p.id
+            JOIN pacientes p ON c.id_paciente = p.id
             WHERE (d.nombre LIKE %s OR p.nombre LIKE %s)
         """
         params = [f"%{busqueda}%", f"%{busqueda}%"]
