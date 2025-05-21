@@ -11,7 +11,7 @@ class LoginView:
         self.usuario_controller = usuario_controller
         self.onlogin_success =on_login_success
 
-         #Configurar tamaño y posicion de la entana login
+        #Configurar tamaño y posicion de la entana login
         self.root.geometry("400x500") #Aumentado el alto para el logo
         self.root.resizable(False, False)#No permitir redimensionar
 
@@ -37,7 +37,7 @@ class LoginView:
 
             #Cargar y redimensionar la imagen
             logo_img = Image.open(logo_path)
-            #Calcular el nuevo tmaño manteniendo la proporcion
+            #Calcular el nuevo tamaño manteniendo la proporcion
             width=200 #Ancho deseado
             ratio = width /logo_img.width
             height = int(logo_img.height * ratio)

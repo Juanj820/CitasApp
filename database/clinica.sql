@@ -57,7 +57,7 @@ INSERT INTO `usuarios`(`id`, `nombre`, `usuario`, `password`, `foto`, `rol`, `cr
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `doctores `
+-- Estructura de tabla para la tabla `doctores`
 --
 
 CREATE TABLE `doctores` (
@@ -72,7 +72,7 @@ CREATE TABLE `doctores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `doctores `
+-- Volcado de datos para la tabla `doctores`
 --
 
 INSERT INTO doctores (`id`,`nombre`,`departamento`,`telefono`,`estado`,`creado_por`,`creado_en`,`actualizado_en`) VALUES
@@ -135,10 +135,10 @@ INSERT INTO `pacientes`(`id`, `nombre`, `sintomas`, `telefono`, `direccion`, `es
 
 CREATE TABLE `citas` (
   `id` int NOT NULL,
-  `doctor_id` int DEFAULT NULL,
+  `id_doctor` int DEFAULT NULL,
   `id_paciente` int DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
-  `estado` enum('Programada','En Consulta','Finalizada','Cancelada','No Asistio','Aprobada','Pendiente') CHARACTER SET utf8mb4 COLLATE unicode_ci DEFAULT NULL,
+  `estado` enum('Programada','En Consulta','Finalizada','Cancelada','No Asistió','Aprobada','Pendiente') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `creado_por` int DEFAULT NULL,
   `creado_en` datetime DEFAULT CURRENT_TIMESTAMP,
   `actualizado_en` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -176,9 +176,9 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `usuario` (`usuario`);
 
 --
--- Indices para la tabla `doctores `
+-- Indices para la tabla `doctores`
 --
-ALTER TABLE `doctores `
+ALTER TABLE `doctores`
   ADD PRIMARY KEY (`id`),
   ADD KEY `creado_por` (`creado_por`);
 
@@ -194,7 +194,7 @@ ALTER TABLE `pacientes`
   --
 ALTER TABLE `citas`
     ADD PRIMARY KEY (`id`),
-    ADD KEY `doctor_id` (`doctor_id`),
+    ADD KEY `id_doctor` (`id_doctor`),
     ADD KEY `id_paciente` (`id_paciente`),
     ADD KEY `creado_por` (`creado_por`);
 
@@ -209,9 +209,9 @@ ALTER TABLE `usuarios`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `doctores `
+-- AUTO_INCREMENT de la tabla `doctores`
 --
-ALTER TABLE `doctores `
+ALTER TABLE `doctores`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
@@ -231,9 +231,9 @@ ALTER TABLE `citas`
 --
 
 --
--- Filtros para la tabla `doctores `
+-- Filtros para la tabla `doctores`
 --
-ALTER TABLE `doctores `
+ALTER TABLE `doctores`
   ADD CONSTRAINT `doctores_ibfk_1` FOREIGN KEY (`creado_por`) REFERENCES `usuarios` (`id`);
 
 --
