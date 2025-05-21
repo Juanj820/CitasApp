@@ -149,11 +149,11 @@ def logout(self):
             self.frame.destroy()
         if hasattr(self, 'navbar'):
             self.navbar.destroy()
-        #llamar a on_logout que reiniciara la aplicacion
+        #llamar a on_logout que reiniciara la aplicación
         self.on_logout()
     except Exception as e:
         print(f"Error al cerrar sesión: {e}")
-        #Forzar el reinicio de la aplicacion
+        #Forzar el reinicio de la aplicación
         self.on_logout()
 
 def update_footer (self):
@@ -164,7 +164,7 @@ def update_footer (self):
         self.footer_right.config(text=f"{now}")
         self.root.after(1000, self.update_footer)
     except:
-        # Si la ventana se ha ddestruido, no hacemos nada 
+        # Si la ventana se ha destruido, no hacemos nada 
         pass
 
     def show_profile(self):
@@ -193,7 +193,7 @@ def update_footer (self):
         self.foto_label.pack()
         def seleccionar_foto():
             from tkinter import filedialog
-            file = filedialog.askopenfilename(filetypes=[("Imagenes", "*.png;*.jpg;*.jpeg;*.gif")])
+            file = filedialog.askopenfilename(filetypes=[("Imágenes", "*.png;*.jpg;*.jpeg;*.gif")])
             if file:
                 img = cargar_img(file)
                 if img:

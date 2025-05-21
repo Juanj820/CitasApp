@@ -33,7 +33,7 @@ CREATE TABLE `usuarios` (
   `usuario` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rol` enum('admin','doctor','recepcionita') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rol` enum('admin','doctor','recepcionista') COLLATE utf8mb4_unicode_ci NOT NULL,
   `creado_en` datetime DEFAULT  CURRENT_TIMESTAMP,
   `actualizado_en` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

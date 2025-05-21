@@ -4,7 +4,7 @@ from controllers.doctor_controller import DoctorController
 from controllers.paciente_controller import PacienteController
 import datetime
 
-ESTADOS = ["Promamada", "En consulta", "Finalizada", "Cancelada", "No asistío", "Aprobada", "Pendiente"]
+ESTADOS = ["Programada", "En consulta", "Finalizada", "Cancelada", "No asistió", "Aprobada", "Pendiente"]
 
 class CitaView:
     def __init__(self, parent, controller,usuario_id):

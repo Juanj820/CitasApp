@@ -6,7 +6,7 @@ from controllers.usuario_controller import UsuarioController
 class App:
     def __init__(self):
         self.root = tb.Window(themename="morph")
-        self.root.title("sistema de Gestion Clinica")
+        self.root.title("sistema de Gestión Clinica")
 
         #Iniciar controladores
         self.usuario_controller = UsuarioController()
@@ -25,7 +25,7 @@ class App:
             self.logout
         )    
     def logout(self):
-        #Usar el nuevo metodo de logout
+        #Usar el nuevo método de logout
         self.login_view.logout()
 
     def run(self):
