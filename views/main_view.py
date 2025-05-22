@@ -15,7 +15,7 @@ class MainView:
         #NAVBAR SUPERIOR (debe ir primero)
         self.navbar = tb.Frame(root, bootstyle="info")
         self.navbar.pack(side="top", fill="x")
-        #Logo en ves de texto
+        #Logo en vez de texto
         logo_path = os.path.join(os.path.dirname(__file__), "..", "assets", "images", "logo.png")
         logo_img = Image.open(logo_path)
         logo_img = logo_img.resize((100, 40), Image.LANCZOS)
@@ -167,10 +167,10 @@ class MainView:
             # Si la ventana se ha destruido, no hacemos nada 
             pass
 
-    def show_profile(self):
+    def show_pro6file(self):
         messagebox.showinfo("Mi Perfil", f"Usuario: {self.usuario['nombre']}")
 
-    def show_settings (self):
+    def show_settings(self):
         from controllers.usuario_controller import UsuarioController
         user = self.usuario
         win = tk.Toplevel(self.root)
