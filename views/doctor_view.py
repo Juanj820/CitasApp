@@ -16,7 +16,7 @@ class DoctorView:
         self.por_pagina = 5
         self.busqueda = StringVar()
         self.busqueda_estado = StringVar(value="")
-        self.toltal_paginas = 1
+        self.total_paginas = 1
         self.total_registros = 0
 
         self.frame = tb.Frame(parent)
@@ -35,7 +35,7 @@ class DoctorView:
         tb.Button(busq_frame, text="Buscar", bootstyle="success", command=self.buscar).pack(side="left", padx=5)
 
         # Contenedor principal para tabla y botones
-        main_container = tb.Frame(main_container)
+        main_container = tb.Frame(self.frame)
         main_container.pack(fill="both", expand=True, padx=30, pady=5)
 
         # Tabla con espacio lateral
@@ -93,8 +93,8 @@ class DoctorView:
         # Calcular total de paginas y registros
         total = self.controller.contar(busq, estado)
         self.total_registros = total
-        self.toltal_paginas = max(1, (total + self.por_pagina - 1) // self.por_pagina)
-        self.lbl_pagina.config(text=f"Pagina {self.pagina} de {self.toltal_paginas}")
+        self.total_paginas = max(1, (total + self.por_pagina - 1) // self.por_pagina)
+        self.lbl_pagina.config(text=f"Pagina {self.pagina} de {self.total_paginas}")
         self.lbl_total.config(text=f"Total registros: {self.total_registros}")
 
     def pagina_anterior(self):
@@ -103,7 +103,7 @@ class DoctorView:
             self.cargar_tabla()
 
     def pagina_siguiente(self):
-        if self.pagina < self.toltal_paginas:
+        if self.pagina < self.total_paginas:
             self.pagina += 1
             self.cargar_tabla()
 
@@ -113,7 +113,7 @@ class DoctorView:
     def editar_doctor(self):
         seleccionado = self.tabla.selection()
         if not seleccionado:
-            messagebox.showwarning("Aviso", "Seleccine un doctor para editar.")
+            messagebox.showwarning("Aviso", "Seleccione un doctor para editar.")
             return
         valores = self.tabla.item(seleccionado[0], "values")
         self.formulario_doctor(valores)
@@ -145,7 +145,7 @@ class DoctorView:
         win.resizable(False, False)
         form_frame = tb.Frame(win, padding=20)
         form_frame.pack(fill="both", expand=True)
-        tb.Label(form_frame, text="Por favor ingrese la informacion del doctor", font=("Arial", 11)).grid(row=0, column=0, columnspan=2, pady=(0, 15))
+        tb.Label(form_frame, text="Por favor ingrese la información del doctor", font=("Arial", 11)).grid(row=0, column=0, columnspan=2, pady=(0, 15))
         nombre = StringVar(value=valores[1] if valores else"")
         departamento = StringVar(value=valores[2] if valores else ESPECIALIDADES[0])
         telefono = StringVar(value=valores[3] if valores else "")
@@ -153,7 +153,7 @@ class DoctorView:
         tb.Label(form_frame, text="Nombre:").grid(row=1, column=0, sticky="e", pady=5, padx=5)
         tb.Entry(form_frame, textvariable=nombre, width=28).grid(row=1, column=1, pady=5, padx=5)
         tb.Label(form_frame, text="Departamento:").grid(row=2, column=0, sticky="e", pady=5, padx=5)
-        dep_cb = tb.Combobox(form_frame, values=ESPECIALIDADES, textvariable=departamento, state="reandoly", width=26)
+        dep_cb = tb.Combobox(form_frame, values=ESPECIALIDADES, textvariable=departamento, state="readonly", width=26)
         dep_cb.grid(row=2, column=1, pady=5, padx=5)
         tb.Label(form_frame, text="Teléfono:").grid(row=3, column=0, sticky="e", pady=5, padx=5)
         tb.Entry(form_frame, textvariable=telefono, width=28).grid(row=3, column=1, pady=5, padx=5)
@@ -169,7 +169,7 @@ class DoctorView:
                     self.controller.actualizar(valores[0], nombre.get(), departamento.get(), telefono.get(), estado.get())
                     messagebox.showinfo("Éxito", "Doctor actualizado correctamente.")
                 else:
-                    self.controller.crear(nombre.get(), departamento.get(), telefono.get(), estado.get())
+                    self.controller.crear(nombre.get(), departamento.get(), telefono.get(), estado.get(), self.usuario_id)
                     messagebox.showinfo("Éxito", "Doctor creado correctamente.")
                 win.destroy()
                 self.cargar_tabla()
@@ -178,4 +178,4 @@ class DoctorView:
         btn_frame = tb.Frame(form_frame)
         btn_frame.grid(row=5, column=0, columnspan=2, pady=18)
         tb.Button(btn_frame, text="Guardar", bootstyle="success", command=guardar, width=12).pack(side="left", padx=8)
-        tb.Button(btn_frame, text="Cancelar", boo6tstyle="danger", command=win.destroy, width=12).pack(side="left", padx=8)
+        tb.Button(btn_frame, text="Cancelar", bootstyle="danger", command=win.destroy, width=12).pack(side="left", padx=8)
