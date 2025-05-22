@@ -40,11 +40,11 @@ class PacienteView:
         
         # Table con espaciado lateral
         tabla_frame = tb.Frame(main_container)
-        tabla_frame.pack(side="left", fill="both", expand=True,padx=(20, 20))
+        tabla_frame.pack(side="left", fill="both", expand=True, padx=(20, 20))
         self.tabla = tb.Treeview(tabla_frame, columns=("id", "nombre", "sintomas", "telefono", "direccion", "estado"), show="headings", height=7, bootstyle="info")
         self.tabla.heading("id", text="ID")
         self.tabla.heading("nombre", text="Nombre")
-        self.tabla.heading("sintomas", text="Sintomas")
+        self.tabla.heading("sintomas", text="Síntomas")
         self.tabla.heading("telefono", text="Teléfono")
         self.tabla.heading("direccion", text="Dirección")
         self.tabla.heading("estado", text="Estado")
@@ -101,12 +101,12 @@ class PacienteView:
         
     def pagina_anterior(self):
         if self.pagina > 1:
-            self.pagina -=1
+            self.pagina -= 1
             self.cargar_tabla()
     
     def pagina_siguiente(self):
         if self.pagina < self.total_paginas:
-            self.pagina +=1
+            self.pagina += 1
             self.cargar_tabla()
             
     def nuevo_paciente(self):
@@ -117,8 +117,8 @@ class PacienteView:
         if not seleccionado:
             messagebox.showwarning("Aviso", "Seleccione un paciente para editar.")
             return
-            valores = self.tabla.item(seleccionado[0], "values")
-            self.formulario_paciente(valores)
+        valores = self.tabla.item(seleccionado[0], "values")
+        self.formulario_paciente(valores)
             
     def eliminar_paciente(self):
         seleccionado = self.tabla.selection()
@@ -126,16 +126,16 @@ class PacienteView:
             messagebox.showwarning("Aviso", "Seleccione un paciente para eliminar.")
             return    
         valores =self.tabla.item(seleccionado[0], "values")
-        if messagebox.askyesno("confirmar", f"¿Eliminar al Paciente {valores[1]} ?"):
+        if messagebox.askyesno("Confirmar", f"¿Eliminar al paciente {valores[1]}?"):
             try:
                 self.controller.eliminar(valores[0])
                 self.cargar_tabla()
-                messagebox.showinfo("Éxito", f"Paciente {valores[1]} eliminado correctamente")
+                messagebox.showinfo("Éxito", f"Paciente {valores[1]} eliminado correctamente.")
             except Exception as e:
                 if '1451' in str(e):
                     messagebox.showerror(
                         "no se puede eliminar",
-                        f"No se puede eliminar elñ paciente '{valores[1]}' porque tiene citas asociadas.\nEliminar primero las citas relacionadas."
+                        f"No se puede eliminar el paciente '{valores[1]}' porque tiene citas asociadas.\nElimine primero las citas relacionadas."
                     )
                 else:
                     messagebox.showerror("Error", f"No se pudo eliminar: {e}")
@@ -159,45 +159,45 @@ class PacienteView:
         estado = StringVar(value=valores[5] if valores else ESTADOS[0])
         
         #Campos del formulario con grid layout
-        tb.Label(form_frame, text="nombre").grid(row=1, column=0, sticky="e", pady=5, padx=5)
+        tb.Label(form_frame, text="Nombre").grid(row=1, column=0, sticky="e", pady=5, padx=5)
         tb.Entry(form_frame, textvariable=nombre, width=28).grid(row=1, column=1, pady=5, padx=5)
         
-        tb.Label(form_frame, text="síntomas").grid(row=2, column=0, sticky="e", pady=5, padx=5)
-        sintomas.cb =tb.Combobox(form_frame, values=SINTOMAS_COMUNES, textvariable=sintomas, state="readonly", width=26)
-        sintomas.cb.grid(row=2, column=1, pady=5, padx=5)
+        tb.Label(form_frame, text="Síntomas").grid(row=2, column=0, sticky="e", pady=5, padx=5)
+        sintomas_cb = tb.Combobox(form_frame, values=SINTOMAS_COMUNES, textvariable=sintomas, 
+                                state="readonly", width=26)
+        sintomas_cb.grid(row=2, column=1, pady=5, padx=5)
         
         tb.Label(form_frame, text="Teléfono").grid(row=3, column=0, sticky="e", pady=5, padx=5)
-        tb.Entry(form_frame, textvariable=nombre, width=28).grid(row=3, column=1, pady=5, padx=5)
+        tb.Entry(form_frame, textvariable=telefono, width=28).grid(row=3, column=1, pady=5, padx=5)
         
         tb.Label(form_frame, text="Dirección").grid(row=4, column=0, sticky="e", pady=5, padx=5)
-        tb.Entry(form_frame, textvariable=nombre, width=28).grid(row=4, column=1, pady=5, padx=5)
+        tb.Entry(form_frame, textvariable=direccion, width=28).grid(row=4, column=1, pady=5, padx=5)
         
         tb.Label(form_frame, text="Estado").grid(row=4, column=0, sticky="e", pady=5, padx=5)
-        
-        estado_cb =tb.Combobox(form_frame, values=ESTADOS, textvariable=estado,state="readonly", width=26)
+        estado_cb =tb.Combobox(form_frame, values=ESTADOS, textvariable=estado,
+                            state="readonly", width=26)
         estado_cb.grid(row=5, column=1, padx=5, pady=5)
         
         def guardar():
             if not nombre.get() or not sintomas.get() or not telefono.get() or not direccion.get():
                 messagebox.showwarning("Aviso", "Todos los campos son obligatorios.")
                 return
-            
             try:
                 if valores:
                     self.controller.actualizar(valores[0], nombre.get(), sintomas.get(),
                                         telefono.get(), direccion.get(), estado.get())
-                    messagebox.showinfo("Exito", "Paciente actualizado correctamente.")
+                    messagebox.showinfo("Éxito", "Paciente actualizado correctamente.")
                 else:
                     self.controller.crear(nombre.get(), sintomas.get(),
                                             telefono.get(), direccion.get(), estado.get(), self.usuario_id)
-                    messagebox.showinfo("Exito", "Paciente creado correctamente.")
-                    win.destroy()
-                    self.cargar_tabla()
+                    messagebox.showinfo("Éxito", "Paciente creado correctamente.")
+                win.destroy()
+                self.cargar_tabla()
             except Exception as e:
                 messagebox.showerror("Error", f"No se pudo guardar: {e}")
                 
             #Frame para botones con mejor espaciado
-            btn_frame =tb.Frame(form_frame)
+            btn_frame = tb.Frame(form_frame)
             btn_frame.grid(row=6, column=0, columnspan=2, pady=18)
             
             tb.Button(btn_frame, text="Guardar", bootstyle="success",
