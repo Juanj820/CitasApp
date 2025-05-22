@@ -7,7 +7,7 @@ import os
 
 class LoginView:
     def __init__(self, root, usuario_controller, on_login_success):
-        self.root =root
+        self.root = root
         self.usuario_controller = usuario_controller
         self.on_login_success = on_login_success
 
@@ -30,7 +30,7 @@ class LoginView:
         #Cargar y mostrar el logo
         try:
             #Intentar cargar el logo desde la carpeta assets/images
-            logo_path = os.path.join ("assets", "images", "logo_blue.png")
+            logo_path = os.path.join("assets", "images", "logo_blue.png")
             if not os.path.exists(logo_path):
                 #Si no existe, usar el logo por defecto
                 logo_path = os.path.join("assets", "images", "logo_blue.png")
@@ -38,8 +38,8 @@ class LoginView:
             #Cargar y redimensionar la imagen
             logo_img = Image.open(logo_path)
             #Calcular el nuevo tamaño manteniendo la proporcion
-            width=200 #Ancho deseado
-            ratio = width /logo_img.width
+            width = 200 #Ancho deseado
+            ratio = width / logo_img.width
             height = int(logo_img.height * ratio)
             logo_img = logo_img.resize((width, height), Image.Resampling.LANCZOS)
 
@@ -48,9 +48,9 @@ class LoginView:
 
             #mostrar el logo
             logo_label = tb.Label(self.frame, image=self.logo_photo)
-            logo_label.pack(pady=(0,20))
+            logo_label.pack(pady=(0, 20))
         except Exception as e:
-            print(f"Error al cargar el logo : {e}")
+            print(f"Error al cargar el logo: {e}")
 
         #Titulo del login
         tb.Label(self.frame, text="Iniciar Sesion:", font=("Arial", 16, "bold"), bootstyle="primary").pack(pady=(0,20))
@@ -79,9 +79,9 @@ class LoginView:
         width = self.root.winfo_width()
         height = self.root.winfo_height()
         #Calcular posicion x, y para centrar
-        x=(self.root.winfo_screenwidth()//2)-(width//2)
+        x = (self.root.winfo_screenwidth() // 2) - (width // 2)
         #Ajustar la posicion vertical para que el footer sea visible
-        y=(self.root.winfo_screenheight()//2)-(height//2)-50
+        y = (self.root.winfo_screenheight() // 2) - (height // 2) - 50
         #Centrar la ventana
         self.root.geometry(f'{width}x{height}+{x}+{y}')
     
