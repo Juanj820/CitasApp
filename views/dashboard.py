@@ -87,12 +87,12 @@ class DashboardView:
         #Doctores recientes
         doctores = DoctorController().listar(por_pagina=5)
         tabla_doc_frame = tb.Labelframe(tablas_frame, text="Doctores recientes", bootstyle="info")
-        tabla_doc_frame.pack(side=LEFT,padx=20, fill=X, expand=True)
+        tabla_doc_frame.pack(side=LEFT, padx=20, fill=X, expand=True)
         tabla_doc = tb.Treeview(tabla_doc_frame, columns=("nombre", "departamento", "telefono", "estado"), 
                                 show="headings", height=6, bootstyle="info")
         tabla_doc.heading("nombre", text="Nombre")
         tabla_doc.heading("departamento", text="Departamento")
-        tabla_doc.heading("telefono", text="Telefono")
+        tabla_doc.heading("telefono", text="Telèfono")
         tabla_doc.heading("estado", text="Estado")
         tabla_doc.column("nombre", width=120)
         tabla_doc.column("departamento", width=120)
@@ -101,11 +101,11 @@ class DashboardView:
         tabla_doc.pack(fill=X, padx=5, pady=5)
 
         for d in doctores:
-            tabla_doc.insert("", "end", values=(d["nombre"],d["departamento"],d["telefono"],d["estado"] ))
+            tabla_doc.insert("", "end", values=(d["nombre"], d["departamento"], d["telefono"], d["estado"] ))
         
         # Pacientes recientes
-        pacientes=PacienteController().listar(por_pagina=5)
-        tabla_pac_frame=tb.Labelframe(tablas_frame, text="Pacientes Recientes", bootstyle="info")
+        pacientes = PacienteController().listar(por_pagina=5)
+        tabla_pac_frame = tb.Labelframe(tablas_frame, text="Pacientes Recientes", bootstyle="info")
         tabla_pac_frame.pack(side=RIGHT, padx=20, fill=X, expand=True)
         tabla_pac = tb.Treeview(tabla_pac_frame, columns=("nombre", "sintomas", "telefono", "direccion", "estado"),
                                 show="headings", height=6, bootstyle="info")
@@ -125,7 +125,7 @@ class DashboardView:
             tabla_pac.insert("", "end", values=(p["nombre"], p["sintomas"], p["telefono"], p["direccion"], p["estado"]))
 
         #footer
-        footer_frame =tb.Frame(self.frame)
+        footer_frame = tb.Frame(self.frame)
         footer_frame.pack(side="bottom", fill=X, pady=10)
         self.footer_label = tb.Label(footer_frame, text="Sistema de gestion Clinica - Dashboard", style="")
         self.footer_label.pack(fill="x")
@@ -133,7 +133,7 @@ class DashboardView:
     def update_footer(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         self.footer_label.config(
-            text=f"Usuario:{self.usuario['nombre']}  Fecha y hora: {now} 2025 Solutiones Tecnologicas"
+            text=f"Usuario: {self.usuario['nombre']} | Fecha y hora: {now} | © 2025 Soluciones Tecnologicas"
         )
         self.parent.after(1000, self.update_footer)
 
