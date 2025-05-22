@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 import time
 
-#Agregar el directorio raiz al patch de python
+#Agregar el directorio raìz al path de python
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from controllers.doctor_controller import DoctorController
@@ -22,16 +22,16 @@ class DashboardView:
         self.frame.pack(fill=BOTH, expand=True)
         
         #Titulo y colores
-        colores =["danger", "warning", "info"]
-        iconos =["","",""]
-        titulos=["Total Doctores", "Total Pacientes", "Total Citas"]
+        colores = ["danger", "warning", "info"]
+        iconos = ["👩‍⚕️","👫","📅"]
+        titulos = ["Total Doctores", "Total Pacientes", "Total Citas"]
         #Obtener datos
         total_doctores = DoctorController().contar()
         total_pacientes = PacienteController().contar()
         total_citas = CitaController().contar()
-        totales =[total_doctores, total_pacientes, total_citas]
+        totales = [total_doctores, total_pacientes, total_citas]
+        
         #Crear estilos personalizados para los totales
-
         style =tb.Style()
         style.configure("TotalDanger.TLabel", background="#dc3545", foreground="white", font=("Arial", 14, "bold"), anchor="center")
         style.configure("TotalWarning.TLabel", background="#ffc107", foreground="white", font=("Arial", 14, "bold"), anchor="center")
@@ -138,6 +138,3 @@ class DashboardView:
         self.parent.after(1000, self.update_footer)
 
         time.sleep(2) #esperar 2 segundos
-
-
-
