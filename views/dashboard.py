@@ -32,7 +32,7 @@ class DashboardView:
         totales = [total_doctores, total_pacientes, total_citas]
         
         #Crear estilos personalizados para los totales
-        style =tb.Style()
+        style = tb.Style()
         style.configure("TotalDanger.TLabel", background="#dc3545", foreground="white", font=("Arial", 14, "bold"), anchor="center")
         style.configure("TotalWarning.TLabel", background="#ffc107", foreground="white", font=("Arial", 14, "bold"), anchor="center")
         style.configure("Totalinfo.TLabel", background="#0dcaf0", foreground="white", font=("Arial", 14, "bold"), anchor="center")
@@ -40,29 +40,29 @@ class DashboardView:
         style.configure("footerAzul.TLabel", background="#007bff", foreground="white", font=("Arial", 10), anchor="center")
         
         #Tarjetas resumen
-        cards_frame =tb.Frame(self.frame)
+        cards_frame = tb.Frame(self.frame)
         cards_frame.pack(pady=20)
         for i, (color, icono, titulo, total) in enumerate(zip(colores, iconos, titulos, totales)):
-        #card con estilo de color
-            card=tb.Frame(cards_frame, style=f"{color}.TFrame", width=220, height=130)
+            #card con estilo de color
+            card = tb.Frame(cards_frame, style=f"{color}.TFrame", width=220, height=130)
             card.pack(side=LEFT, padx=18)
             card.pack_propagate(False)
 
             #Obtener color real del estilo
             style = tb.Style()
-            card_bg =style.lookup(f"{color}.TFrame", "background")
+            card_bg = style.lookup(f"{color}.TFrame", "background")
             if not card_bg or card_bg in ("", "SistemButtonFace", None):
-                card_bg ="#dc3545" if color=="danger" else ("#ffc107" if color=="warning" else "#0dcaf0")
+                card_bg = "#dc3545" if color=="danger" else ("#ffc107" if color=="warning" else "#0dcaf0")
             
             #contenedor principal con padding
-            main_frame=tb.Frame(card, style=f"{color}.TFrame")
-            main_frame.pack(fill="both", expand= True, padx=10, pady=10)
+            main_frame = tb.Frame(card, style=f"{color}.TFrame")
+            main_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
             #contenedor para el icono
             icon_frame = tb.Frame(main_frame, style=f"{color}.Tframe")
             icon_frame.pack(fill="x", pady=(0,5))
 
-            #icono (mas pequeño)
+            #icono (màs pequeño)
             tb.Label(icon_frame, text=icono, font=("Arial", 28), 
                     style=f"{color}.inverse.TLavel").pack()
             
@@ -71,11 +71,11 @@ class DashboardView:
             info_frame.pack(fill="x", padx=(5,0))
 
             #Titulo
-            tb.Label(info_frame,text=titulo, font=("Arial", 11, "bold"),
+            tb.Label(info_frame, text=titulo, font=("Arial", 11, "bold"),
                     style=f"{color}.inverse.TLabel").pack()
                     
             #Total debajo del titulo con estilo personalizado
-            total_frame=tb.Frame(info_frame, style=f"{color}.TFrame")
+            total_frame = tb.Frame(info_frame, style=f"{color}.TFrame")
             total_frame.pack(fill="x", pady=(5,0))
             total_style = "TotalDanger.TLabel" if color=="danger" else ("TotalWarning.TLabel" if color=="Warning" else "TotalInfo.TLabel")
             tb.Label(total_frame, text=str(total), style=total_style).pack(fill="x")
@@ -85,8 +85,8 @@ class DashboardView:
         tablas_frame.pack(pady=20, fill=X)
 
         #Doctores recientes
-        doctores =DoctorController().listar(por_pagina=5)
-        tabla_doc_frame=tb.Labelframe(tablas_frame, text="Doctores recientes", bootstyle="info")
+        doctores = DoctorController().listar(por_pagina=5)
+        tabla_doc_frame = tb.Labelframe(tablas_frame, text="Doctores recientes", bootstyle="info")
         tabla_doc_frame.pack(side=LEFT,padx=20, fill=X, expand=True)
         tabla_doc = tb.Treeview(tabla_doc_frame, columns=("nombre", "departamento", "telefono", "estado"), 
                                 show="headings", height=6, bootstyle="info")
