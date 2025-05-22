@@ -63,7 +63,7 @@ class PacienteView:
         tabla_height = self.tabla.winfo_reqheight()
         btns_frame.config(height=tabla_height)
         
-        # Botones de accióm con menor espacio entre ellos
+        # Botones de acción con menor espacio entre ellos
         tb.Button(btns_frame, text="Nuevo Paciente", bootstyle="info", command=self.nuevo_paciente, width=16).pack(pady=6, padx=16)
         tb.Button(btns_frame, text="Editar", bootstyle="warning", command=self.editar_paciente, width=16).pack(pady=6, padx=16)
         tb.Button(btns_frame, text="Eliminar", bootstyle="danger", command=self.eliminar_paciente, width=16).pack(pady=6, padx=16)
@@ -78,7 +78,7 @@ class PacienteView:
         self.lbl_total = tb.Label(pag_frame, text="")
         self.lbl_total.pack(side="left", padx=15)
         
-        self.cargar_tabla ()
+        self.cargar_tabla()
     
     def buscar(self):
         self.pagina = 1
@@ -96,7 +96,7 @@ class PacienteView:
         total = self.controller.contar(busq, estado)
         self.total_registros = total
         self.total_paginas = max(1, (total + self.por_pagina -1) // self.por_pagina)
-        self.lbl_pagina.config(text=f"Página {self.pagina} de {self.total_pagina}")
+        self.lbl_pagina.config(text=f"Página {self.pagina} de {self.total_paginas}")
         self.lbl_total.config(text=f"Total registros: {self.total_registros}")
         
     def pagina_anterior(self):
@@ -173,7 +173,7 @@ class PacienteView:
         tb.Label(form_frame, text="Dirección").grid(row=4, column=0, sticky="e", pady=5, padx=5)
         tb.Entry(form_frame, textvariable=direccion, width=28).grid(row=4, column=1, pady=5, padx=5)
         
-        tb.Label(form_frame, text="Estado").grid(row=4, column=0, sticky="e", pady=5, padx=5)
+        tb.Label(form_frame, text="Estado").grid(row=5, column=0, sticky="e", pady=5, padx=5)
         estado_cb =tb.Combobox(form_frame, values=ESTADOS, textvariable=estado,
                             state="readonly", width=26)
         estado_cb.grid(row=5, column=1, padx=5, pady=5)
