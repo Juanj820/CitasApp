@@ -1,6 +1,6 @@
 LICENCIA DE SOFTWARE
 
-Sistema de Gestión Clínica ClinicSalud
+Sistema de Gestión Clínica
 Copyright (c) 2024 [Juan/JJTech]
 
 Se concede permiso, libre de cargos, a cualquier persona que obtenga una copia 
