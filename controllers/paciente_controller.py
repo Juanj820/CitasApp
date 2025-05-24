@@ -12,14 +12,14 @@ class PacienteController:
         if estado:
             query += " AND estado = %s"
             params.append(estado)
-        query += "LIMIT %s OFFSET %s"
+        query += " LIMIT %s OFFSET %s"
         params.extend([por_pagina, offset])
         cursor.execute(query, tuple(params))
         return cursor.fetchall()
     
     def contar(self, busqueda='', estado=''):
         cursor = self.conn.cursor()
-        query = "SELECT COUNT (*) FROM pacientes WHERE nombre LIKE %s"
+        query = "SELECT COUNT(*) FROM pacientes WHERE nombre LIKE %s"
         params = [f"%{busqueda}%"]
         if estado:
             query += " AND estado = %s"

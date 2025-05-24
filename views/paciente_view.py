@@ -30,8 +30,8 @@ class PacienteView:
         self.busq_entry = tb.Entry(busq_frame, textvariable=self.busqueda)
         self.busq_entry.pack(side="left",padx=5)
         tb.Label(busq_frame,text="Estado:").pack(side="left",padx=5)
-        self.estado_cd = tb.Combobox(busq_frame, values=["", *ESTADOS], textvariable=self.busqueda_estado, width=12, state="readonly")
-        self.estado_cd.pack(side="left")
+        self.estado_cb = tb.Combobox(busq_frame, values=["", *ESTADOS], textvariable=self.busqueda_estado, width=12, state="readonly")
+        self.estado_cb.pack(side="left")
         tb.Button(busq_frame, text="Buscar", bootstyle="success", command=self.buscar).pack(side="left", padx=5)
         
         # Contenedor principal para tabla y botones
@@ -195,12 +195,12 @@ class PacienteView:
                 self.cargar_tabla()
             except Exception as e:
                 messagebox.showerror("Error", f"No se pudo guardar: {e}")
-                
-            #Frame para botones con mejor espaciado
-            btn_frame = tb.Frame(form_frame)
-            btn_frame.grid(row=6, column=0, columnspan=2, pady=18)
-            
-            tb.Button(btn_frame, text="Guardar", bootstyle="success",
-                    command=guardar, width=12).pack(side="left", padx=8)
-            tb.Button(btn_frame, text="Cancelar", bootstyle="danger",
-                    command=win.destroy, width=12).pack(side="left", padx=8)
+        
+        #Frame para botones con mejor espaciado
+        btn_frame = tb.Frame(form_frame)
+        btn_frame.grid(row=6, column=0, columnspan=2, pady=18)
+        
+        tb.Button(btn_frame, text="Guardar", bootstyle="success",
+                command=guardar, width=12).pack(side="left", padx=8)
+        tb.Button(btn_frame, text="Cancelar", bootstyle="danger",
+                command=win.destroy, width=12).pack(side="left", padx=8)

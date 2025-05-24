@@ -5,7 +5,7 @@ from controllers.usuario_controller import UsuarioController
 
 class App:
     def __init__(self):
-        self.root = tb.Window(themename="morph")
+        self.root = tb.Window(themename="yeti")
         self.root.title("sistema de Gestión Clinica")
 
         #Iniciar controladores
